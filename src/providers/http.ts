@@ -1,17 +1,19 @@
-import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
+import axios from 'axios'
 
-export const httpProvider = axios.create({
+export const http = axios.create({
   baseURL: process.env.SERVER_API_URL,
-  timeout: 60000,
+  timeout: 6000,
 })
 //isBrowser = true
 const isBrowser = typeof window !== 'undefined'
 //interceptors axios拦截器
-httpProvider.interceptors.request.use(
+http.interceptors.request.use(
   // 在发送请求之前做些什么
-  (config: AxiosRequestConfig) => {
+  config => {
+    console.log('请求拦截器入参config:', config)
     if (isBrowser) {
       const token = window.localStorage.getItem('token')
+      console.log('请求拦截器token:', token)
       if (config && config.headers && token) {
         config.headers.Authorization = `Bearer ${token}`
       }
@@ -24,26 +26,14 @@ httpProvider.interceptors.request.use(
   }
 )
 
-httpProvider.interceptors.response.use(
-  (
-    value: AxiosResponse<{
-      statusCode: number
-      success: boolean
-      msg: string | null
-      data: unknown //value.data.data 。。。
-    }>
-  ) => {
-    // res=value.data
-    const res = value.data
-    if (!res.success) {
-        console.log(res)
-      console.log(res.msg + ' failed')
-      return res.msg
-    }
-    return res.msg + ' data successfully'
+http.interceptors.response.use(
+  res => {
+    console.log('响应拦截器:', res)
+    return res.data
   },
   err => {
     if (err && err.response && err.response.status) {
+      console.log('响应拦截器err:', err)
       const status = err.response.status
 
       switch (status) {

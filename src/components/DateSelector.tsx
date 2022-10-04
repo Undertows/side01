@@ -8,10 +8,11 @@ export default function DateSelector({
   const [month, setMonth] = useState([] as number[])
   const [date, setDate] = useState([] as number[])
   const [year, setYear] = useState([] as number[])
+  const now = new Date()
   const [fullYear, setFullYear] = useState({
-    year: undefined,
-    month: undefined,
-    date: undefined,
+    year: now.getFullYear(),
+    month: now.getMonth() + 1,
+    date: now.getDate(),
   })
 
   useEffect(() => {
@@ -33,7 +34,7 @@ export default function DateSelector({
         fullYear.date = e.target.value as unknown as number
       handleDateSelect(fullYear)
     }
-
+//TODO: 解决下面这个错误。。
   return (
     <>
       <select onChange={FullYear('year')}>

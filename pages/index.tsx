@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import React, { useState, useCallback } from 'react'
 import Head from 'next/head'
 // import Image from 'next/image'
-
 import { DiaryProvider } from '../src/providers/diary'
 
 const Home: NextPage = () => {
@@ -14,7 +13,7 @@ const Home: NextPage = () => {
     const { msg, diaryObj } = await DiaryProvider.saveDiary({ content: diary })
     console.log(msg)
     // console.log(diaryObj._id)
-    // selectMood(diaryObj._id)
+    selectMood(diaryObj!._id)
   }
 
   const selectMood = (id: string) => {
