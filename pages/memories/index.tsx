@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { DiaryProvider } from '../../src/providers/diary'
 import DateSelector from '../../src/components/DateSelector'
-import Untitled from '../../src/components/Untitled'
+import Cover from '../../src/components/Cover'
 import moods from '../../src/utils/constant'
 
 export default function Memories() {
   const [diaries, setDiaries] = useState<IDiary[]>([]) //or [] as IDiary[]
   const [time, getTime] = useState<subCondition>()
   const [currentIndex, setCurrentIndex] = useState(-1)
+
+  const props = {
+    diaries,
+    currentIndex,
+    deleteDiary,
+    doubleClick,
+  }
 
   useEffect(() => {
     //TODO: 一上来只随机展示一条日记
@@ -60,12 +67,7 @@ export default function Memories() {
       <button onClick={() => getDiariesByWhat('date', time!)}>byDate</button>
       {'  '}
       {/* // flex flex-col place-items-center */}
-      <Untitled
-        diaries={diaries}
-        currentIndex={currentIndex}
-        dd={doubleClick}
-        d={deleteDiary}
-      />
+      <Cover props={props} />
     </>
   )
 }

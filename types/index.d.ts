@@ -19,3 +19,10 @@ type fullYear = {
   month: number
   date: number
 }
+
+interface P<T> {
+  [key: string]: T
+  [k: string]: number
+  [key: string]: Function
+  [key: string]: Function
+}
