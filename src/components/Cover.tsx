@@ -1,5 +1,5 @@
 import React from 'react'
-import Iterator from './Iterator'
+import Iterable from './Iterable'
 
 export interface IProps {
   props: {
@@ -10,12 +10,16 @@ export interface IProps {
   }
 }
 export default function Cover({ props }: IProps) {
+  const { diaries } = props
   return (
     <div
       className='w-screen h-screen
     grid grid-flow-row grid-cols-4 place-content-center
     gap-6 justify-items-start '>
-      <Iterator iterable={props} />
+      {/* <Iterator iterable={props} /> */}
+      {diaries.map((d, i) => (
+        <Iterable iterable={props} d={d} i={i} key={i} />
+      ))}
     </div>
   )
 }
