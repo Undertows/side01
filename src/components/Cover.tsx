@@ -14,8 +14,8 @@ export default function Cover({ props }: IProps) {
   return (
     <div
       className='w-screen h-screen
-    grid grid-flow-row grid-cols-4 place-content-center
-    gap-6 justify-items-start '>
+    grid grid-flow-row grid-cols-1 place-content-center
+    gap-10 justify-items-start '>
       {/* <Iterator iterable={props} /> */}
       {diaries.map((d, i) => (
         <Iterable iterable={props} d={d} i={i} key={i} />
