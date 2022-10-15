@@ -1,17 +1,20 @@
-import { useRouter } from 'next/router'
 import { DiaryProvider } from '../../src/providers/diary'
 import moods from '../../src/utils/constant'
-//TODO: mood应该作为一个component而不是page
-function mood() {
-  const router = useRouter()
+
+interface IProps {
+  _id: string
+  setDiaryObj: Function
+}
+
+function mood({ _id, setDiaryObj }: IProps) {
   const setMood = async (mood: string) => {
     try {
       const { msg } = await DiaryProvider.setMood({
         mood: mood,
-        id: router.query.id,
+        id: _id,
       })
       alert(msg)
-      router.push('/')
+      setDiaryObj(null)
     } catch (e) {
       console.log(e)
     }

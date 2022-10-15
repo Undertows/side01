@@ -57,7 +57,7 @@ export default function Memories() {
       <select
         onChange={e => getDiariesByWhat('mood', { mood: e.target.value })}>
         {moods.map(m => (
-          <option key={m} value={m}>  
+          <option key={m} value={m}>
             {m}
           </option>
         ))}
