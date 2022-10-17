@@ -21,7 +21,7 @@ export default function Iterable({
       // border border-black border-solid
       onClick={() => deleteDiary(d._id, i)}
       onMouseDown={e => doubleClick(i, e)}
-      className={`border border-black border-solid 
+      className={`border border-black border-solid
       relative ${
         i == currentIndex &&
         `pointer-events-none before:pointer-events-auto before:w-4 before:h-4 before:rounded-2xl before:bg-rose-500

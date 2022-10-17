@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { DiaryProvider } from '../../src/providers/diary'
 import moods from '../../src/utils/constant'
 
@@ -7,6 +8,15 @@ interface IProps {
 }
 
 function mood({ _id, setDiaryObj }: IProps) {
+  const [blur, setblur] = useState(false)
+
+  useEffect(() => {
+    if (_id !== undefined)
+      setTimeout(() => {
+        setblur(true)
+      }, 10)
+  })
+
   const setMood = async (mood: string) => {
     try {
       const { msg } = await DiaryProvider.setMood({
@@ -20,15 +30,22 @@ function mood({ _id, setDiaryObj }: IProps) {
     }
   }
   return (
-    <div className='w-screen h-screen flex place-content-center place-items-center'>
-      {/* border-black border-solid border-2 */}
+    <div
+      className={`${blur && 'backdrop-blur-sm'}
+    absolute z-20 w-screen h-screen
+    transition duration-400 ease-in-out
+    flex place-content-center place-items-center`}>
       <div
-        className='grid gap-10 grid-cols-4 w-[30vw] h-[35vh]
-    place-content-center place-items-center'>
+        className={`${blur && 'scale-110'} transform
+    transition duration-200 ease-in-out
+    w-[30vw] h-[35vh]
+    grid gap-10 grid-cols-4
+    place-content-center place-items-center`}>
         {moods.map((m, i) => (
           <div
             key={i}
-            className='rounded-full w-16 h-16 border-[1px] border-opacity-20 border-black border-solid '
+            className={`rounded-full w-16 h-16
+    border-[1px] border-opacity-20 border-black border-solid`}
             onClick={() => setMood(m)}>
             {m}
           </div>

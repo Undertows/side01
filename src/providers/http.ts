@@ -10,10 +10,10 @@ const isBrowser = typeof window !== 'undefined'
 http.interceptors.request.use(
   // 在发送请求之前做些什么
   config => {
-    console.log('请求拦截器入参config:', config)
+    // console.log('请求拦截器入参config:', config)
     if (isBrowser) {
       const token = window.localStorage.getItem('token')
-      console.log('请求拦截器token:', token)
+      // console.log('请求拦截器token:', token)
       if (config && config.headers && token) {
         config.headers.Authorization = `Bearer ${token}`
       }
@@ -28,12 +28,12 @@ http.interceptors.request.use(
 
 http.interceptors.response.use(
   res => {
-    console.log('响应拦截器:', res)
+    // console.log('响应拦截器:', res)
     return res.data
   },
   err => {
     if (err && err.response && err.response.status) {
-      console.log('响应拦截器err:', err)
+      // console.log('响应拦截器err:', err)
       const status = err.response.status
 
       switch (status) {
