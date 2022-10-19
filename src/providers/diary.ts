@@ -24,4 +24,11 @@ export class DiaryProvider {
   static async deleteDiary(id: string): Promise<PromiseGenerics> {
     return http.delete(`/test/deleteDiary/?${id}`)
   }
+
+  static async handleHashTag(tags: {
+    tags: string[]
+    id: string
+  }): Promise<PromiseGenerics> {
+    return http.put(`/test/handleTag`, tags)
+  }
 }

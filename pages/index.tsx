@@ -10,34 +10,53 @@ const Home: NextPage = () => {
   const [diary, setDiary] = useState('')
   const [diaryObj, setDiaryObj] = useState<IDiary | null | undefined>(null)
   const router = useRouter()
+
   const disabled = useMemo(() => {
     if (diary == '' || diaryObj) return true
     else return false
   }, [diary, diaryObj])
 
   const saveDiary = async () => {
-    let strArr: string[] = diary.split('')
-    // char !== '　' ||
-    // char !== '\r\n' ||
-    // char !== '\n' ||
-    // char !== '\r' ||
-    // char !== '\t'
-    let a2: Array<string | RegExp> = strArr
-    if (a2.filter(char => char !== ' ').length == 0) {
-      alert('不能输入空格')
-      return null
+    //匹配所有(/*/g)不是空格（\S）的字符,得到的结果如果为null（表示没有除空格以外的字符）,则:
+    if (diary.match(/\S/g) == null) {
+      alert('不能输入空格') //TODO:样式
+      return null //打断
     }
+    /* 弄了半天原来是/x(?=y)/的x部分错了
+     * /#.+ => /#\S+
+     * .+的话会把空格也匹配进去
+     * 所以y才只会匹配到最末尾的一个\s+\S*
+     */
+    //允许单独的hash tag  /#\S+(?=[\S\s]*)/
+    //不允许单独的hash tag /#\S+(?=\s+\S+)/
     try {
       const { msg, diaryObj } = await DiaryProvider.saveDiary({
         content: diary,
       })
       //拿到了返回的日记对象（刚保存的那条）（无错误）
       if (diaryObj !== undefined) {
+        //TODO:sting[]
+        diary.match(/#[^,\s#]+/g)
+          ? handleHashTag(diary.match(/#[^,\s#]+/g)!, diaryObj._id)
+          : null
         setDiaryObj(diaryObj) //激活Popup组件
         document.querySelector('textarea')!.value = ''
       } else console.log(msg) //'日记保存失败。'
     } catch (error) {
-      console.log(error)
+      console.log(`日记保存失败 ${error}`)
+    }
+  }
+
+  async function handleHashTag(hashTag: string[], _id: string) {
+    try {
+      const { msg } = await DiaryProvider.handleHashTag({
+        tags: hashTag,
+        id: _id,
+      })
+      console.log(msg)
+    } catch (error) {
+      setDiaryObj(null) //网络错误时popup消失
+      console.log(`保存tag失败 ${error}`)
     }
   }
 
@@ -59,7 +78,7 @@ const Home: NextPage = () => {
           autoFocus
           onChange={e => setDiary(e.target.value)}
           className='w-[40vw] h-[50vh] rounded outline-none resize-none
-        border-transparent border-solid border-2 text-2xl'
+        border-transparent border-solid border-2 text-2xl bg-transparent'
         />
         <div className='flex mt-10 gap-20'>
           <button

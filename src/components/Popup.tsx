@@ -24,9 +24,10 @@ function mood({ _id, setDiaryObj }: IProps) {
         id: _id,
       })
       alert(msg)
-      setDiaryObj(null)
+      setDiaryObj(null) //popup消失
     } catch (e) {
-      console.log(e)
+      setDiaryObj(null) //网络错误时popup消失
+      console.log(`set mood失败 ${e}`)
     }
   }
   return (
