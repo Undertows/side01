@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { DiaryProvider } from '../../src/providers/diary'
-import DateSelector from '../../src/components/DateSelector'
+// import DateSelector from '../../src/components/DateSelector'
 import Cover from '../../src/components/Cover'
 import Notices from '../../src/components/Notices'
 import moods from '../../src/utils/constant'
