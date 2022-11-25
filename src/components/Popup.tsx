@@ -7,7 +7,7 @@ interface IProps {
   setDiaryObj: Function
 }
 
-function mood({ _id, setDiaryObj }: IProps) {
+function Mood({ _id, setDiaryObj }: IProps) {
   const [blur, setblur] = useState(false)
 
   useEffect(() => {
@@ -57,4 +57,4 @@ function mood({ _id, setDiaryObj }: IProps) {
   )
 }
 
-export default mood
+export default Mood
