@@ -23,7 +23,8 @@ function mood({ _id, setDiaryObj }: IProps) {
         mood: mood,
         id: _id,
       })
-      alert(msg)
+      // setblur(false)//TODO: 退场动画
+      document.querySelector('textarea')!.value = ''
       setDiaryObj(null) //popup消失
     } catch (e) {
       setDiaryObj(null) //网络错误时popup消失
